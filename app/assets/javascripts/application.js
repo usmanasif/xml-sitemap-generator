@@ -18,6 +18,7 @@
 //= require bootstrap/custom
 //= require turbolinks
 //= require_tree .
+//= require sitemap
 
 document.addEventListener("turbolinks:load", function() {
     if ($('li.active').html() != undefined) {

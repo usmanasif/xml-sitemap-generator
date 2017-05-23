@@ -10,7 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160812162002) do
+ActiveRecord::Schema.define(version: 20170523124905) do
+
+  create_table "links", force: :cascade do |t|
+    t.string   "loc"
+    t.date     "last_mod"
+    t.integer  "change_freq"
+    t.float    "prority"
+    t.integer  "parent_id"
+    t.integer  "sitemap_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "sitemaps", force: :cascade do |t|
+    t.string   "url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
