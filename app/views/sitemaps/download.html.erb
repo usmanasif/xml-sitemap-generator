@@ -1,0 +1,12 @@
+<p><%= '<?xml version="1.0" encoding="UTF-8"?>' %></p>
+<p><%= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' %></p>
+<% @sitemap.links.each do |link| %>
+	<p><%= '<url>' %></p>
+		<p><%= '<loc>' + link.loc + '</loc>' %></p>
+		<p><%= '<changefreq>daily</changefreq>' %></p>
+		<p><%= '<priority>' + link.prority.to_s + '</priority>' %></p>
+		<p><%= '<last_mod>' + link.last_mod.strftime('%Y-%m-%d') + '</last_mod>' %></p>
+		<p><%= '</url>' %></p>
+<% end %>
+
+<p><%= '</urlset>' %></p>

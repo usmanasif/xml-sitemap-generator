@@ -4,7 +4,9 @@
   <thead>
     <tr>
       <th>loc</th>
-      <th>Actions</th>
+      <th>priority</th>
+      <th>last_mod</th>
+
     </tr>
   </thead>
   <tbody>
@@ -14,8 +16,14 @@
           <%= link.loc %>
         </td>
         <td>
+          <%= link.prority %>
+        </td>
+        <td>
+          <%= link.last_mod %>
         </td>
       </tr>
     <% end %>
   </tbody>
 </table>
+
+<%= link_to 'Generate xml', download_sitemap_path(@sitemap), class: 'btn btn-success'%>

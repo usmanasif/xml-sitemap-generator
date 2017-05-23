@@ -11,6 +11,9 @@ Rails.application.routes.draw do
 
   resources :sitemaps, only: [:index,:create,:show] do
     get :generate_sitemap
+    member do
+      get :download
+    end
   end
 
 end
