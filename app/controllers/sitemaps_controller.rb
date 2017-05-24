@@ -24,7 +24,6 @@ class SitemapsController < ApplicationController
 
   def download
     @sitemap = Sitemap.find(params[:id])
-    @links = @sitemap.links
   end
 
   def show

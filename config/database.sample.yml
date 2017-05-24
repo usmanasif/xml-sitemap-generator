@@ -1,6 +1,5 @@
 connection: &connection
   adapter: postgresql
-  host: your host
   username: your username
   password: your password
   pool: 5
@@ -9,12 +8,15 @@ connection: &connection
 
 development:
   <<: *connection
-  database: sitemap_generator
+  host: localhost
+  database: sitemap_generator_development
 
-test: &test
+test:
   <<: *connection
+  host: localhost
   database: sitemap_generator_test
 
 production:
   <<: *connection
-  database: sitemap_generator
+  host: your_host
+  database: sitemap_generator_production
