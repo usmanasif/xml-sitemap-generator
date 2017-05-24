@@ -16,4 +16,6 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :links, only: [:edit,:update]
+
 end

@@ -14,13 +14,13 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby] # Windows doe
 gem 'slim-rails', '3.1.0'
 gem 'devise', '4.2.0'
 gem 'spidr'
+gem 'pg'
 
 group :development, :test do
   gem 'byebug', platform: :mri  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
 end
 
 group :development do
-  gem 'sqlite3'                 # Use sqlite3 as the database for Active Record
   gem 'web-console'             # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
   gem 'listen', '~> 3.0.5'
   gem 'spring'                  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
@@ -29,7 +29,6 @@ end
 
 # always use: "bundle install --without production" command to install gems during development
 group :production do
-  gem 'pg'
   gem 'thin'
 end
 

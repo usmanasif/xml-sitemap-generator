@@ -1,0 +1,40 @@
+<h3>Links</h3>
+
+<table class="table table-stripped">
+  <thead>
+    <tr>
+      <th>loc</th>
+      <th>priority</th>
+      <th>change frequency</th>
+      <th>last modified</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @links.all.try(:each) do |link| %>
+      <tr>
+        <td>
+          <%= link.loc %>
+        </td>
+        <td>
+          <%= link.priority %>
+        </td>
+        <td>
+          <%= link.change_freq %>
+        </td>
+        <td>
+          <%= link.last_mod %>
+        </td>
+        <td>
+          <%= link_to "Edit",edit_link_path(id: link.id),:class => "btn btn-outline-default edit_var",remote: true %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'download XML', download_sitemap_path(@sitemap, format: 'xml'), class: 'btn btn-success' %>
+<p class="text-info">right click on above button and click 'save link as' to save download.xml file</p>
+
+<div class="modal fade" id="edit-link" role="document">
+</div>

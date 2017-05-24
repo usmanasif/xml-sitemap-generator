@@ -1,29 +1,24 @@
 class SitemapsController < ApplicationController
 
   def index
-    @sitemaps = Sitemap.all
-    @new_sitemap = Sitemap.new
+    @sitemaps = current_user.sitemaps
+    @new_sitemap = current_user.sitemaps.new
   end
 
   def generate_sitemap
     sitemap = Sitemap.find(params[:sitemap_id])
     sitemap.links.destroy_all
-    @url_map = Hash.new { |hash,key| hash[key] = [] }
+    hash = {}
 
     Spidr.site(sitemap.url) do |spider|
       spider.every_link do |origin,dest|
-        @url_map[dest] << origin
-        link = sitemap.links.new(
-            loc: origin,
-            last_mod: Time.now.strftime('%Y-%m-%d'),
-            prority: 0.5
-        )
-        if link.valid?
-          link.save
-        end
+        hash[origin] = "lalala" unless hash.key?(origin)
+        hash[dest] = "lalala" unless hash.key?(dest)
       end
     end
-    @links = sitemap.links
+    hash.keys.uniq.each do |l|
+      link = sitemap.links.create(loc: l,priority: 0.5,last_mod: Time.now.strftime('%Y-%m-%d'))
+    end
     redirect_to sitemap_path(id: sitemap.id)
   end
 
@@ -34,15 +29,15 @@ class SitemapsController < ApplicationController
 
   def show
     @sitemap = Sitemap.find(params[:id])
-    @links = @sitemap.links
+    @links = @sitemap.links.order(:created_at)
   end
 
   def create
-    @sitemap = Sitemap.create(sitemap_params)
+    @sitemap = current_user.sitemaps.create(sitemap_params)
     if @sitemap.save
       redirect_back(fallback_location: :back,notice: "New sitemap added.")
     else
-      redirect_back(fallback_location: :back,notice: "Failed to create new sitemap.")
+      redirect_back(fallback_location: :back,notice: "Sitemap already exists.")
     end
   end
 

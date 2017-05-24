@@ -1,0 +1,25 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <%= form_for @link, remote: true do |f| %>
+      <div class="modal-header">
+        <button class="close" aria-label="Close" data-dismiss="modal" type="button">
+          <span aria-hidden="true">×</span>
+        </button>
+        <h4 class="modal-title">Edit link</h4>
+      </div>
+      <div class="modal-body">
+        <div class="field2 m-b">
+          <%= f.label :priority,class: "col-xs-3" %>
+          <%= f.text_field :priority,class: "form-control col-xs-9 var_name",required: true %>
+        </div>
+        <div class="field2 m-b">
+          <%= f.label :change_freq,class: "col-xs-3" %>
+          <%= f.text_field :change_freq,class: "form-control col-xs-9 var_name",required: true %>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <%= submit_tag "Edit",class: "btn btn-success col-xs-4" %>
+      </div>
+    <% end %>
+  </div>
+</div>
