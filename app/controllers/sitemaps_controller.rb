@@ -1,4 +1,5 @@
 class SitemapsController < ApplicationController
+
   def index
     @sitemaps = Sitemap.all
     @new_sitemap = Sitemap.new
@@ -28,19 +29,7 @@ class SitemapsController < ApplicationController
 
   def download
     @sitemap = Sitemap.find(params[:id])
-    # render xml: @sitemap.links, content_type: "application/xml"
-    #render xml: @sitemap.generate_xml, filename: 'my_file2.xml', content_type: "application/xml", :disposition => 'attachment'
-
-    # respond_to do |format|
-    #   format.xml
-    # end
-    # respond_to do |format|
-    #   format.xml { render layout: 'layouts/test.xml.erb', filename: 'my_file.xml' }
-    # end
-    # respond_to do |format|
-    #   format.html
-    #   format.xml { send_file :filename => 'mydoc.xml', :type=>"application/xml", :disposition => 'attachment' }
-    # end
+    @links = @sitemap.links
   end
 
   def show

@@ -26,4 +26,5 @@
   </tbody>
 </table>
 
-<%= link_to 'Generate xml', download_sitemap_path(@sitemap), class: 'btn btn-success'%>
+<%= link_to 'download XML', download_sitemap_path(@sitemap, format: 'xml'), class: 'btn btn-success' %>
+<p class="text-info">right click on above button and click 'save link as' to save download.xml file</p>
