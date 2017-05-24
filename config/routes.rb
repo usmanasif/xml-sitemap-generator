@@ -13,4 +13,6 @@ Rails.application.routes.draw do
     get :generate_sitemap
   end
 
+  resources :links, only: [:edit,:update]
+
 end

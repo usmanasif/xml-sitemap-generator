@@ -4,7 +4,7 @@ class CreateLinks < ActiveRecord::Migration[5.0]
       t.string :loc
       t.date :last_mod
       t.integer :change_freq
-      t.float :prority
+      t.float :priority
       t.integer :parent_id
       t.integer :sitemap_id
 
