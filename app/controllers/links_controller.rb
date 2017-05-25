@@ -7,6 +7,7 @@ class LinksController < ApplicationController
   def update
     var = Link.find(params[:id])
     var.update(link_params)
+    var.update_attribute(:last_mod, Time.now.strftime('%Y-%m-%d'))
     redirect_back(fallback_location: :back,notice: "Variable updated")
   end
 
