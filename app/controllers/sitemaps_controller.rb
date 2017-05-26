@@ -8,18 +8,8 @@ class SitemapsController < ApplicationController
   def generate_sitemap
     sitemap = Sitemap.find(params[:sitemap_id])
     sitemap.links.destroy_all
-    hash = {}
-
-    Spidr.site(sitemap.url) do |spider|
-      spider.every_link do |origin,dest|
-        hash[origin] = "lalala" unless hash.key?(origin)
-        hash[dest] = "lalala" unless hash.key?(dest)
-      end
-    end
-    hash.keys.uniq.each do |l|
-      link = sitemap.links.create(loc: l,priority: 0.5,last_mod: Time.now.strftime('%Y-%m-%d'))
-    end
-    redirect_to sitemap_path(id: sitemap.id)
+    sitemap.delay.get_links(sitemap,current_user)
+    redirect_to sitemaps_path,notice: "your sitemap is being generated"
   end
 
   def download

@@ -3,7 +3,7 @@ class CreateLinks < ActiveRecord::Migration[5.0]
     create_table :links do |t|
       t.string :loc
       t.date :last_mod
-      t.integer :change_freq
+      t.string :change_freq
       t.float :priority
       t.integer :parent_id
       t.integer :sitemap_id
