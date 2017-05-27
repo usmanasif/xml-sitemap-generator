@@ -3,6 +3,7 @@ class NotificationMailer < ActionMailer::Base
 
   def scheduled_demo(user)
     email = user.email
-    mail(:to => 'bilal.basharat@devsinc.com', :subject => 'The requested sitemap has been generated')
+    
+    mail(:to => email, :subject => 'The requested sitemap has been generated')
   end
 end
