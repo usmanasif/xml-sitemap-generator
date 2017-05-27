@@ -9,13 +9,12 @@ Rails.application.routes.draw do
   get '/about', to: 'application#about', as: 'about'
   get '/contact', to: 'application#contact', as: 'contact'
 
-  resources :sitemaps, only: [:index,:create,:show] do
-    get :generate_sitemap
+  resources :sitemaps, only: [:index, :create, :show] do
     member do
+      get :generate
       get :download
     end
   end
 
   resources :links, only: [:edit,:update]
-
 end

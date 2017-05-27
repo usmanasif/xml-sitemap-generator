@@ -4,53 +4,43 @@ class Sitemap < ApplicationRecord
   has_many :links
   validates :url, uniqueness: { scope: :user }
 
-  def get_links(sitemap,user)
-    hash =  Hash.new(0)
-    dpus =  Hash.new(0)
-    url_map = Hash.new { |hash,key| hash[key] = [] }
+  def get_links
+    self.links.destroy_all
 
-    Spidr.site(sitemap.url) do |spider|
-      spider.every_link do |origin,dest|
-        url_map[dest] << origin
-        if dest.to_s.start_with?('http')
-          hash[dest] = url_map[dest].length if url_map[dest].length > hash[dest]
-          dpus[dest] = dest.path.to_s.split('/').length > 0 ? (dest.path.to_s.split('/').length)-1 : dest.path.to_s.split('/').length
-        end
+    site_map_crawler = Crawler::Engine.new
+    site_map_crawler.start_crawling(self.url)
+
+    maximum_depth_of_index = site_map_crawler.maximum_depth_of_index
+
+    maximum_dq_lq_product = site_map_crawler.maximum_dq_lq_product(maximum_depth_of_index)
+
+    site_map_crawler.link_nodes.each do |link|
+      if link.to_s.start_with?('http')
+        raw_priority = site_map_crawler.raw_priority(link, maximum_depth_of_index, maximum_dq_lq_product)
+
+        # TODO: write the following code in the event when admin will change age_in_months or changefreq.
+        # Priority with Age Degradation =
+        # IF: changefreq = never OR changefreq = yearly ,
+        # THEN: RP * (0.95 ^ (1 OR # months ago it was posted-3))
+        # final_priority = raw_priority * (0.95 ^ (link.age_in_months < 5 ? 1 : (link.age_in_months - 3)))
+
+        # TODO: write the following code in the event when admin will change age_in_months
+        # Minimum Priority for New Content: IF content is less than 3 months old, then Priority >= 0.46
+        # if link.age_in_months < 3
+        #   if raw_priority < 0.46
+        #     raw_priority = 0.46
+        #   end
+        # end
+
+        self.links.create(
+            loc: link,
+            priority: raw_priority,
+            last_mod: Time.now.strftime('%Y-%m-%d')
+        )
       end
     end
-    url_map.keys.uniq.each do |l|
-      if l.to_s.start_with?('http')
-        puts url_map[l]
-        ilp = url_map[l].length
-        puts ilp
-        dpu = l.path.to_s.split('/').length > 0 ? (l.path.to_s.split('/').length)-1 : l.path.to_s.split('/').length
-        puts dpu
 
-        lq = ilp / hash.values.max
-        di = 1 / (dpu / dpus.values.max)
-        dq = di /
-
-        # formulas provided by client:
-        # Link Quotient (LQ) = ilp / MAX ( ALL ( ilp))
-
-        # Depth Index (DI) = 1 / (dpu / MAX ( ALL ( dpu)))
-
-        # Depth Quotient (DQ) = DI / MAX ( ALL ( DI))
-
-        # Raw Priority (RP) = ((0.35 DQ) + (0.65 LQ) / MAX ( ALL ( DQ * LQ))
-
-        # Priority with Age Degradation = IF: changefreq = never OR changefreq = yearly , THEN: RP * (0.95 ^ (1 OR # months ago it was posted-3))
-
-        # Minimum Priority for New Content: IF content is less than 3 months old, then Priority > 0.45
-
-
-
-
-
-        link = sitemap.links.create(loc: l,priority: 0.5,last_mod: Time.now.strftime('%Y-%m-%d'))
-      end
-    end
-    NotificationMailer.scheduled_demo(user).deliver
+    NotificationMailer.scheduled_demo(self.user).deliver
   end
 
 end

@@ -15,7 +15,7 @@
           <%= sitemap.url %>
         </td>
         <td>
-          <%= link_to 'Generate Sitemap', sitemap_generate_sitemap_path(sitemap_id: sitemap.id), class: 'btn btn-outline-default edit_var' %>
+          <%= link_to 'Generate Sitemap', generate_sitemap_path(sitemap), class: 'btn btn-outline-default edit_var' %>
           <%= link_to 'View Sitemap', sitemap_path(sitemap), class: 'btn btn-outline-default edit_var' %>
         </td>
       </tr>
