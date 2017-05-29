@@ -5,6 +5,7 @@ class Sitemap < ApplicationRecord
   validates :url, uniqueness: { scope: :user }
 
   def get_links
+    self.update status: 'in progress'
     self.links.destroy_all
 
     site_map_crawler = Crawler::Engine.new
@@ -23,7 +24,13 @@ class Sitemap < ApplicationRecord
         )
       end
     end
-    NotificationMailer.scheduled_demo(self.user).deliver
+    begin
+      NotificationMailer.scheduled_demo(self.user).deliver
+    rescue Exception => e
+      NotificationMailer.error_in_mailer(e.message).deliver
+    end
+
+    self.update status: 'finished', crawl_operation_count: self.crawl_operation_count + 1
   end
 
 end
