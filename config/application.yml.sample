@@ -1,0 +1,5 @@
+MAILGUN_SMTP_SERVER: your_credentials
+MAILGUN_SMTP_LOGIN: your_credentials
+MAILGUN_SMTP_PASSWORD: your_credentials
+MAILGUN_SMTP_DOMAIN: your_credentials
+DEVELOPER_EMAIL: your_credentials
