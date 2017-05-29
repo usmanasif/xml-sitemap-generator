@@ -1,25 +1,48 @@
 <div class="modal-dialog">
   <div class="modal-content">
-    <%= form_for @link, remote: true do |f| %>
-      <div class="modal-header">
-        <button class="close" aria-label="Close" data-dismiss="modal" type="button">
-          <span aria-hidden="true">×</span>
-        </button>
-        <h4 class="modal-title">Edit link</h4>
-      </div>
-      <div class="modal-body">
-        <div class="field2 m-b">
-          <%= f.label :priority,class: "col-xs-3" %>
-          <%= f.text_field :priority,class: "form-control col-xs-9 var_name",required: true %>
+    <div class="modal-header">
+      <button class="close" aria-label="Close" data-dismiss="modal" type="button">
+        <span aria-hidden="true">×</span>
+      </button>
+      <h4 class="modal-title">Edit link</h4>
+    </div>
+    <div class="modal-body">
+      <%= form_for @link, remote: true do |f| %>
+        <div class="form-group">
+          <%= f.label :priority %>
+          <%= f.number_field :priority, in: 0.0..1.0, step: 0.01, class: "form-control" %>
+	        <div class="checkbox">
+		        <label>
+			        <input type="checkbox" name="priority_for_all"> For all sub links
+		        </label>
+	        </div>
         </div>
-        <div class="field2 m-b">
-          <%= f.label :change_freq,class: "col-xs-3" %>
-          <%= f.text_field :change_freq,class: "form-control col-xs-9 var_name" %>
+        <div class="form-group">
+          <%= f.label :changefreq %><br>
+	        <% options_for_changefreq = [['Never', 'never'], ['Yearly', 'yearly'],
+	                                     ['Monthly', 'monthly'], ['Weekly', 'weekly'],
+	                                     ['Daily', 'daily'], ['Hourly', 'hourly'],
+	                                     ['Always', 'always']] %>
+          <%= f.select :changefreq, options_for_changefreq, class: "form-control" %>
+	        <div class="checkbox">
+		        <label>
+			        <input type="checkbox" name="changefreq_for_all"> For all sub links
+		        </label>
+	        </div>
         </div>
-      </div>
-      <div class="modal-footer">
-        <%= submit_tag "Edit",class: "btn btn-success col-xs-4" %>
-      </div>
-    <% end %>
+        <div class="form-group">
+          <%= f.label :age_in_months %>
+          <%= f.number_field :age_in_months, in: 1..100, class: "form-control" %>
+        </div>
+        <div class="form-group">
+          <%= f.label :lastmod %>
+          <%= f.text_field :lastmod, placeholder: 'Format should be 2017-05-21', class: "form-control" %>
+	        <p class="help-block">Please follow this format for lastmod yyyy-mm-dd i.e. 2017-05-21.</p>
+        </div>
+
+		    <%= submit_tag 'Edit', class: "btn btn-success" %>
+
+      <% end %>
+    </div>
   </div>
 </div>

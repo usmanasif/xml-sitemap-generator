@@ -5,8 +5,9 @@
     <tr>
       <th>loc</th>
       <th>priority</th>
-      <th>change frequency</th>
-      <th>last modified</th>
+      <th>changefreq</th>
+      <th>lastmod</th>
+      <th>age(Months)</th>
       <th>Actions</th>
     </tr>
   </thead>
@@ -20,13 +21,16 @@
           <%= link.priority %>
         </td>
         <td>
-          <%= link.change_freq %>
+          <%= link.changefreq %>
         </td>
         <td>
-          <%= link.last_mod %>
+          <%= link.lastmod %>
         </td>
         <td>
-          <%= link_to "Edit",edit_link_path(id: link.id),:class => "btn btn-outline-default edit_var",remote: true %>
+          <%= link.age_in_months %>
+        </td>
+        <td>
+          <%= link_to 'Edit', edit_link_path(id: link.id), :class => 'btn btn-outline-default edit_var', remote: true %>
         </td>
       </tr>
     <% end %>

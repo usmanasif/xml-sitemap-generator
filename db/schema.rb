@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170525052149) do
+ActiveRecord::Schema.define(version: 20170529041241) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,13 +32,14 @@ ActiveRecord::Schema.define(version: 20170525052149) do
 
   create_table "links", force: :cascade do |t|
     t.string   "loc"
-    t.date     "last_mod"
-    t.string   "change_freq"
     t.float    "priority"
     t.integer  "parent_id"
     t.integer  "sitemap_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+    t.string   "changefreq",    default: "never"
+    t.string   "lastmod"
+    t.integer  "age_in_months", default: 3
   end
 
   create_table "sitemaps", force: :cascade do |t|
